@@ -37,13 +37,40 @@ public class ContactAccountingSystem {
                         if (name.equals("0")) {
                             continue;
                         }
+                        if (name.trim().isEmpty()) {
+                            System.out.println("Введите корректное имя.");
+                            break;
+                        }
+                        boolean nameExists = false;
+                        for (int i = 0; i < size; i++) {
+                            if (name.equals(names[i])) {
+                                System.out.println("Контакт с таким именем уже существует. Переименуйте контакт.");
+                                nameExists = true;
+                                break;
+                            }
+                        }
+                        if (nameExists) {
+                            break;
+                        }
                         names[size] = name;
                         System.out.print("Введите номер телефона: ");
                         String number = sc.nextLine();
+                        boolean isValidNumber = true;
+                        for (int i = 0; i < number.length(); i++) {
+                            char ch = number.charAt(i);
+                            if (!Character.isDigit(ch) && ch != '+' && ch != '-') {
+                                isValidNumber = false;
+                                break;
+                            }
+                        }
+                        if (!isValidNumber) {
+                            System.out.println("Некорректный номер. Допустимы только цифры и '+', '-'.");
+                            break;
+                        }
                         phoneNumbers[size] = number;
                         size++;
                     } else {
-                        System.out.println("Список контактов полон");
+                        System.out.println("Список контактов полон.");
                     }
                     break;
                 case 2:
@@ -65,7 +92,7 @@ public class ContactAccountingSystem {
                     if (searchAdd) {
                         System.out.println("Телефон " + nameSearch + ": " + phoneNumber);
                     } else {
-                        System.out.println("Контакт с именем " + nameSearch + " не найден");
+                        System.out.println("Контакт с именем " + nameSearch + " не найден.");
                     }
                     break;
                 case 4:
@@ -87,7 +114,7 @@ public class ContactAccountingSystem {
                             System.out.println((i + 1) + "." + names[i] + " - " + phoneNumbers[i]);
                         }
                     } else {
-                        System.out.println("Контакт с именем " + nameDelete + " не найден");
+                        System.out.println("Контакт с именем " + nameDelete + " не найден.");
                     }
                     break;
                 case 5:
